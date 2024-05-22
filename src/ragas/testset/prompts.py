@@ -5,160 +5,166 @@ from ragas.llms.prompt import Prompt
 
 reasoning_question_prompt = Prompt(
     name="reasoning_question",
-    instruction="""Complicate the given question by rewriting question into a multi-hop reasoning question based on the provided context.
-    Answering the question should require the reader to make multiple logical connections or inferences using the information available in given context.
-    Rules to follow when rewriting question:
-    1. Ensure that the rewritten question can be answered entirely from the information present in the contexts.
-    2. Do not frame questions that contains more than 15 words. Use abbreviation wherever possible.
-    3. Make sure the question is clear and unambiguous.
-    4. phrases like 'based on the provided context','according to the context',etc are not allowed to appear in the question.""",
+    instruction="""Complica la pregunta dada reescribiéndola como una pregunta de razonamiento múltiple basada en el contexto proporcionado.
+Responder la pregunta debe requerir que el lector haga múltiples conexiones lógicas o inferencias usando la información disponible en el contexto dado.
+Reglas a seguir al reescribir la pregunta:
+1. Asegúrate de que la pregunta reescrita pueda ser respondida completamente desde la información presente en los contextos.
+2. No formules preguntas que contengan más de 15 palabras. Usa abreviaturas siempre que sea posible.
+3. Asegúrate de que la pregunta sea clara y unívoca.
+4. No se permiten frases como 'basado en el contexto proporcionado', 'de acuerdo con el contexto', etc. en la pregunta.
+""",
     examples=[
         {
-            "question": "What is the capital of France?",
-            "context": "France is a country in Western Europe. It has several cities, including Paris, Lyon, and Marseille. Paris is not only known for its cultural landmarks like the Eiffel Tower and the Louvre Museum but also as the administrative center.",
-            "output": "Linking the Eiffel Tower and administrative center, which city stands as both?",
+            "question": "¿Cuál es la capital de Francia?",
+            "context": "Francia es un país en Europa Occidental. Cuenta con varias ciudades, incluyendo París, Lyon y Marsella. París no solo es conocido por sus puntos de referencia culturales como la Torre Eiffel y el Museo del Louvre, sino también como el centro administrativo.",
+            "output": "Conectando la Torre Eiffel y el centro administrativo, ¿qué ciudad se destaca por ambos?",
         },
         {
-            "question": "What does the append() method do in Python?",
-            "context": "In Python, lists are used to store multiple items in a single variable. Lists are one of 4 built-in data types used to store collections of data. The append() method adds a single item to the end of a list.",
-            "output": "If a list represents a variable collection, what method extends it by one item?",
+            "question": "¿Qué hace el método append() en Python?",
+            "context": "En Python, las listas se utilizan para almacenar múltiples elementos en una sola variable. Las listas son uno de los 4 tipos de datos integrados utilizados para almacenar colecciones de datos. El método append() añade un solo elemento al final de la lista.",
+            "output": "Si una lista representa una colección de variables, ¿qué método la extiende añadiendo un elemento?",
         },
     ],
     input_keys=["question", "context"],
     output_key="output",
     output_type="str",
-    language="english",
+    language="spanish",
 )
 
 
 multi_context_question_prompt = Prompt(
     name="multi_context_question",
     instruction="""
-    The task is to rewrite and complicate the given question in a way that answering it requires information derived from both context1 and context2. 
-    Follow the rules given below while rewriting the question.
-        1. The rewritten question should not be very long. Use abbreviation wherever possible.
-        2. The rewritten question must be reasonable and must be understood and responded by humans.
-        3. The rewritten question must be fully answerable from information present in context1 and context2. 
-        4. Read and understand both contexts and rewrite the question so that answering requires insight from both context1 and context2.
-        5. phrases like 'based on the provided context','according to the context?',etc are not allowed to appear in the question.""",
+La tarea es reescribir y complicar la pregunta dada de tal manera que responderla requiera información derivada tanto del contexto1 como del contexto2.
+Sigue las reglas dadas a continuación mientras reescribes la pregunta.
+    1. La pregunta reescrita no debe ser muy larga. Usa abreviaturas siempre que sea posible.
+    2. La pregunta reescrita debe ser razonable y debe ser comprendida y respondida por los humanos.
+    3. La pregunta reescrita debe ser completamente respondible desde la información presente en el contexto1 y contexto2.
+    4. Lee y comprende ambos contextos y reescribe la pregunta para que responderla requiera comprensión de ambos contextos.
+    5. No se permiten frases como 'basado en el contexto proporcionado', 'de acuerdo con el contexto', etc. en la pregunta.
+""",
     examples=[
         {
-            "question": "What process turns plants green?",
-            "context1": "Chlorophyll is the pigment that gives plants their green color and helps them photosynthesize.",
-            "context2": "Photosynthesis in plants typically occurs in the leaves where chloroplasts are concentrated.",
-            "output": "In which plant structures does the pigment responsible for their verdancy facilitate energy production?",
+            "question": "¿Qué proceso vuelve verdes a las plantas?",
+            "context1": "La clorofila es el pigmento que da a las plantas su color verde y les ayuda a fotosintetizar.",
+            "context2": "La fotosíntesis en las plantas ocurre típicamente en las hojas donde los cloroplastos están concentrados.",
+            "output": "¿En qué estructuras de las plantas el pigmento responsable de su verdor facilita la producción de energía?",
         },
         {
-            "question": "How do you calculate the area of a rectangle?",
-            "context1": "The area of a shape is calculated based on the shape's dimensions. For rectangles, this involves multiplying the length and width.",
-            "context2": "Rectangles have four sides with opposite sides being equal in length. They are a type of quadrilateral.",
-            "output": "What multiplication involving equal opposites yields a quadrilateral's area?",
+            "question": "¿Cómo se calcula el área de un rectángulo?",
+            "context1": "El área de una figura se calcula en base a las dimensiones de la figura. Para los rectángulos, esto implica multiplicar el largo y el ancho.",
+            "context2": "Los rectángulos tienen cuatro lados, siendo los lados opuestos iguales en longitud. Son un tipo de cuadrilátero.",
+            "output": "¿Qué multiplicación que involucra opuestos iguales produce el área de un cuadrilátero?",
         },
     ],
     input_keys=["question", "context1", "context2"],
     output_key="output",
     output_type="str",
-    language="english",
+    language="spanish",
 )
 
 conditional_question_prompt = Prompt(
     name="conditional_question",
-    instruction="""Rewrite the provided question to increase its complexity by introducing a conditional element.
-    The goal is to make the question more intricate by incorporating a scenario or condition that affects the context of the question.
-    Follow the rules given below while rewriting the question.
-        1. The rewritten question should not be longer than 25 words. Use abbreviation wherever possible.
-        2. The rewritten question must be reasonable and must be understood and responded by humans.
-        3. The rewritten question must be fully answerable from information present context.
-        4. phrases like 'provided context','according to the context?',etc are not allowed to appear in the question.""",
+    instruction="""Reescribe la pregunta proporcionada para aumentar su complejidad introduciendo un elemento condicional.
+El objetivo es hacer la pregunta más compleja incorporando un escenario o condición que afecte el contexto de la pregunta.
+Sigue las reglas dadas a continuación al reescribir la pregunta.
+    1. La pregunta reescrita no debe ser más larga de 25 palabras. Usa abreviaturas siempre que sea posible.
+    2. La pregunta reescrita debe ser razonable y debe ser comprendida y respondida por los humanos.
+    3. La pregunta reescrita debe ser completamente respondible desde el contexto presente.
+    4. No se permiten frases como 'contexto proporcionado', 'de acuerdo con el contexto', etc. en la pregunta.
+""",
     examples=[
         {
-            "question": "What is the function of the roots of a plant?",
-            "context": "The roots of a plant absorb water and nutrients from the soil, anchor the plant in the ground, and store food.",
-            "output": "What dual purpose do plant roots serve concerning soil nutrients and stability?",
+            "question": "¿Cuál es la función de las raíces de una planta?",
+            "context": "Las raíces de una planta absorben agua y nutrientes del suelo, anclan la planta en el suelo y almacenan alimentos.",
+            "output": "¿Qué doble propósito cumplen las raíces de las plantas con respecto a los nutrientes del suelo y la estabilidad?",
         },
         {
-            "question": "How do vaccines protect against diseases?",
-            "context": "Vaccines protect against diseases by stimulating the body's immune response to produce antibodies, which recognize and combat pathogens.",
-            "output": "How do vaccines utilize the body's immune system to defend against pathogens?",
+            "question": "¿Cómo protegen las vacunas contra las enfermedades?",
+            "context": "Las vacunas protegen contra enfermedades estimulando la respuesta inmunitaria del cuerpo para producir anticuerpos, los cuales reconocen y combaten patógenos.",
+            "output": "¿Cómo utilizan las vacunas el sistema inmunitario del cuerpo para defenderse de los patógenos?",
         },
     ],
     input_keys=["question", "context"],
     output_key="output",
     output_type="str",
-    language="english",
+    language="spanish",
 )
 
 
 compress_question_prompt = Prompt(
     name="compress_question",
-    instruction="""Rewrite the following question to make it more indirect and shorter while retaining the essence of the original question.
-    The goal is to create a question that conveys the same meaning but in a less direct manner. The rewritten question should shorter so use abbreviation wherever possible.""",
+    instruction="""Reescribe la siguiente pregunta para hacerla más indirecta y más corta mientras retienes la esencia de la pregunta original.
+El objetivo es crear una pregunta que transmita el mismo significado pero de una manera menos directa. La pregunta reescrita debe ser más corta, así que usa abreviaturas siempre que sea posible.
+""",
     examples=[
         {
-            "question": "What is the distance between the Earth and the Moon?",
-            "output": "How far is the Moon from Earth?",
+            "question": "¿Cuál es la distancia entre la Tierra y la Luna?",
+            "output": "¿Qué tan lejos está la Luna de la Tierra?",
         },
         {
-            "question": "What ingredients are required to bake a chocolate cake?",
-            "output": "What's needed for a chocolate cake?",
+            "question": "¿Qué ingredientes se necesitan para hornear un pastel de chocolate?",
+            "output": "¿Qué se necesita para un pastel de chocolate?",
         },
     ],
     input_keys=["question"],
     output_key="output",
     output_type="str",
-    language="english",
+    language="spanish",
 )
 
 
 conversational_question_prompt = Prompt(
     name="conversation_question",
-    instruction="""Reformat the provided question into two separate questions as if it were to be part of a conversation. Each question should focus on a specific aspect or subtopic related to the original question.
-    Follow the rules given below while rewriting the question.
-        1. The rewritten question should not be longer than 25 words. Use abbreviation wherever possible.
-        2. The rewritten question must be reasonable and must be understood and responded by humans.
-        3. The rewritten question must be fully answerable from information present context.
-        4. phrases like 'provided context','according to the context?',etc are not allowed to appear in the question.""",
+    instruction="""Reformatea la pregunta proporcionada en dos preguntas separadas como si fuera parte de una conversación. Cada pregunta debe enfocarse en un aspecto o subtema específico relacionado con la pregunta original.
+Sigue las reglas dadas a continuación al reescribir la pregunta.
+    1. La pregunta reescrita no debe ser más larga de 25 palabras. Usa abreviaturas siempre que sea posible.
+    2. La pregunta reescrita debe ser razonable y debe ser comprendida y respondida por los humanos.
+    3. La pregunta reescrita debe ser completamente respondible desde el contexto presente.
+    4. No se permiten frases como 'contexto proporcionado', 'de acuerdo con el contexto', etc. en la pregunta.
+""",
     examples=[
         {
-            "question": "What are the advantages and disadvantages of remote work?",
+            "question": "¿Cuáles son las ventajas y desventajas del trabajo remoto?",
             "output": {
-                "first_question": "What are the benefits of remote work?",
-                "second_question": "On the flip side, what challenges are encountered when working remotely?",
+                "first_question": "¿Cuáles son los beneficios del trabajo remoto?",
+                "second_question": "Por otro lado, ¿qué desafíos se encuentran al trabajar de manera remota?",
             },
         }
     ],
     input_keys=["question"],
     output_key="output",
     output_type="json",
-    language="english",
+    language="spanish",
 )
 
 
 question_answer_prompt = Prompt(
     name="answer_formulate",
-    instruction="""Answer the question using the information from the given context. Output verdict as '1' if answer is present '-1' if answer is not present in the context.""",
+    instruction="""Responde la pregunta utilizando la información del contexto dado. Da un veredicto como '1' si la respuesta está presente, '-1' si la respuesta no está presente en el contexto.
+""",
     examples=[
         {
-            "context": """Climate change is significantly influenced by human activities, notably the emission of greenhouse gases from burning fossil fuels. The increased greenhouse gas concentration in the atmosphere traps more heat, leading to global warming and changes in weather patterns.""",
-            "question": "How do human activities contribute to climate change?",
+            "context": """El cambio climático está significativamente influenciado por actividades humanas, notablemente la emisión de gases de efecto invernadero por la quema de combustibles fósiles. El aumento de la concentración de gases de efecto invernadero en la atmósfera atrapa más calor, lo que lleva al calentamiento global y a cambios en los patrones climáticos.""",
+            "question": "¿Cómo contribuyen las actividades humanas al cambio climático?",
             "answer": {
-                "answer": "Human activities contribute to climate change primarily through the emission of greenhouse gases from burning fossil fuels. These emissions increase the concentration of greenhouse gases in the atmosphere, which traps more heat and leads to global warming and altered weather patterns.",
+                "answer": "Las actividades humanas contribuyen al cambio climático principalmente a través de la emisión de gases de efecto invernadero provenientes de la quema de combustibles fósiles. Estas emisiones aumentan la concentración de gases de efecto invernadero en la atmósfera, lo que atrapa más calor y conduce al calentamiento global y a cambios en los patrones climáticos.",
                 "verdict": "1",
             },
         },
         {
-            "context": """The concept of artificial intelligence (AI) has evolved over time, but it fundamentally refers to machines designed to mimic human cognitive functions. AI can learn, reason, perceive, and, in some instances, react like humans, making it pivotal in fields ranging from healthcare to autonomous vehicles.""",
-            "question": "What are the key capabilities of artificial intelligence?",
+            "context": """El concepto de inteligencia artificial (IA) ha evolucionado con el tiempo, pero fundamentalmente se refiere a máquinas diseñadas para imitar funciones cognitivas humanas. La IA puede aprender, razonar, percibir y, en algunas instancias, reaccionar como los humanos, lo que la hace fundamental en campos que van desde la salud hasta los vehículos autónomos.""",
+            "question": "¿Cuáles son las capacidades clave de la inteligencia artificial?",
             "answer": {
-                "answer": "Artificial intelligence is designed to mimic human cognitive functions, with key capabilities including learning, reasoning, perception, and reacting to the environment in a manner similar to humans. These capabilities make AI pivotal in various fields, including healthcare and autonomous driving.",
+                "answer": "La inteligencia artificial está diseñada para imitar las funciones cognitivas humanas, con capacidades clave que incluyen el aprendizaje, el razonamiento, la percepción y la reacción al entorno de manera similar a los humanos. Estas capacidades hacen que la IA sea fundamental en varios campos, incluyendo la atención médica y la conducción autónoma.",
                 "verdict": "1",
             },
         },
         {
-            "context": """The novel "Pride and Prejudice" by Jane Austen revolves around the character Elizabeth Bennet and her family. The story is set in the 19th century in rural England and deals with issues of marriage, morality, and misconceptions.""",
-            "question": "What year was 'Pride and Prejudice' published?",
+            "context": """La novela "Orgullo y Prejuicio" de Jane Austen gira en torno a la personaje Elizabeth Bennet y su familia. La historia se desarrolla en el siglo 19 en la Inglaterra rural y trata temas de matrimonio, moralidad y malentendidos.""",
+            "question": "¿En qué año se publicó 'Orgullo y prejuicio'?",
             "answer": {
-                "answer": "The answer to given question is not present in context",
+                "answer": "La respuesta a la pregunta dada no está presente en el contexto.",
                 "verdict": "-1",
             },
         },
@@ -166,32 +172,32 @@ question_answer_prompt = Prompt(
     input_keys=["context", "question"],
     output_key="answer",
     output_type="json",
-    language="english",
+    language="spanish",
 )
 
 keyphrase_extraction_prompt = Prompt(
     name="keyphrase_extraction",
-    instruction="Extract the top 3 to 5 keyphrases from the provided text, focusing on the most significant and distinctive aspects. ",
+    instruction="Extrae de 3 a 5 frases clave del texto proporcionado, enfocándote en los aspectos más significativos y distintivos.",
     examples=[
         {
-            "text": "A black hole is a region of spacetime where gravity is so strong that nothing, including light and other electromagnetic waves, has enough energy to escape it. The theory of general relativity predicts that a sufficiently compact mass can deform spacetime to form a black hole.",
+            "text": "Un agujero negro es una región del espacio-tiempo donde la gravedad es tan fuerte que nada, incluida la luz y otras ondas electromagnéticas, tiene suficiente energía para escapar de él. La teoría general de la relatividad predice que una masa suficientemente compacta puede deformar el espacio-tiempo para formar un agujero negro.",
             "output": {
                 "keyphrases": [
-                    "Black hole",
-                    "Region of spacetime",
-                    "Strong gravity",
-                    "Light and electromagnetic waves",
-                    "Theory of general relativity",
+                    "Agujero negro",
+                    "Región of espacio-tiempo",
+                    "Gravedad fuerte",
+                    "Luz y ondas electromagnéticas",
+                    "Teoría general de la relatividad",
                 ]
             },
         },
         {
-            "text": "The Great Wall of China is an ancient series of walls and fortifications located in northern China, built around 500 years ago. This immense wall stretches over 13,000 miles and is a testament to the skill and persistence of ancient Chinese engineers.",
+            "text": "La Gran Muralla China es una serie antigua de murallas y fortificaciones ubicadas en el norte de China, construidas hace unos 500 años. Esta inmensa muralla se extiende por más de 13,000 millas y es un testimonio de la habilidad y persistencia de los ingenieros chinos antiguos.",
             "output": {
                 "keyphrases": [
-                    "Great Wall of China",
-                    "Ancient fortifications",
-                    "Northern China",
+                    "Gran Muralla China",
+                    "Fortificaciones antiguas",
+                    "Norte de China",
                 ]
             },
         },
@@ -204,22 +210,22 @@ keyphrase_extraction_prompt = Prompt(
 
 seed_question_prompt = Prompt(
     name="seed_question",
-    instruction="Generate a question that can be fully answered from given context. The question should be formed using topic",
+    instruction="Genera una pregunta que pueda ser completamente respondida desde el contexto dado. La pregunta debe ser formulada usando el tema.",
     examples=[
         {
-            "context": "Photosynthesis in plants involves converting light energy into chemical energy, using chlorophyll and other pigments to absorb light. This process is crucial for plant growth and the production of oxygen.",
-            "keyphrase": "Photosynthesis",
-            "question": "What is the role of photosynthesis in plant growth?",
+            "context": "La fotosíntesis en las plantas implica convertir la energía lumínica en energía química, utilizando clorofila y otros pigmentos para absorber la luz. Este proceso es crucial para el crecimiento de las plantas y la producción de oxígeno.",
+            "keyphrase": "Fotosíntesis",
+            "question": "¿Cuál es el papel de la fotosíntesis en el crecimiento de las plantas?",
         },
         {
-            "context": "The Industrial Revolution, starting in the 18th century, marked a major turning point in history as it led to the development of factories and urbanization.",
-            "keyphrase": "Industrial Revolution",
-            "question": "How did the Industrial Revolution mark a major turning point in history?",
+            "context": "La Revolución Industrial, que comenzó en el siglo 18, marcó un punto de inflexión importante en la historia ya que condujo al desarrollo de fábricas y la urbanización.",
+            "keyphrase": "Revolución Industrial",
+            "question": "¿Cómo marcó la Revolución Industrial un punto de inflexión importante en la historia?",
         },
         {
-            "context": "The process of evaporation plays a crucial role in the water cycle, converting water from liquid to vapor and allowing it to rise into the atmosphere.",
-            "keyphrase": "Evaporation",
-            "question": "Why is evaporation important in the water cycle?",
+            "context": "El proceso de evaporación juega un papel crucial en el ciclo del agua, convirtiendo el agua de líquido a vapor y permitiéndole ascender a la atmósfera.",
+            "keyphrase": "Evaporación",
+            "question": "¿Por qué es importante la evaporación en el ciclo del agua?",
         },
     ],
     input_keys=["context", "keyphrase"],
@@ -229,23 +235,23 @@ seed_question_prompt = Prompt(
 
 main_topic_extraction_prompt = Prompt(
     name="main_topic_extraction",
-    instruction="Identify and extract the two main topics discussed in depth in the given text.",
+    instruction="Identifica y extrae los dos principales temas discutidos en profundidad en el texto dado.",
     examples=[
         {
-            "text": "Blockchain technology presents a decentralized ledger that ensures the integrity and transparency of data transactions. It underpins cryptocurrencies like Bitcoin, providing a secure and immutable record of all transactions. Beyond finance, blockchain has potential applications in supply chain management, where it can streamline operations, enhance traceability, and improve fraud prevention. It allows for real-time tracking of goods and transparent sharing of data among participants.",
+            "text": "La tecnología blockchain presenta un libro mayor descentralizado que garantiza la integridad y transparencia de las transacciones de datos. Sustenta criptomonedas como Bitcoin, proporcionando un registro seguro e inmutable de todas las transacciones. Más allá de las finanzas, la blockchain tiene aplicaciones potenciales en la gestión de la cadena de suministro, donde puede agilizar las operaciones, mejorar la trazabilidad y mejorar la prevención del fraude. Permite el seguimiento en tiempo real de los bienes y el intercambio transparente de datos entre los participantes.",
             "output": {
                 "topics": [
-                    "Blockchain technology and its foundational role in cryptocurrencies",
-                    "Applications of blockchain in supply chain management",
+                    "Tecnología blockchain y su rol fundacional en las criptomonedas",
+                    "Aplicaciones de blockchain en la gestión de la cadena de suministro",
                 ]
             },
         },
         {
-            "text": "Telemedicine has revolutionized the way healthcare is delivered, particularly in rural and underserved areas. It allows patients to consult with doctors via video conferencing, improving access to care and reducing the need for travel. Another significant advancement in healthcare is precision medicine, which tailors treatments to individual genetic profiles. This approach has led to more effective therapies for a variety of conditions, including certain cancers and chronic diseases.",
+            "text": "La telemedicina ha revolucionado la forma en que se entrega la atención médica, particularmente en áreas rurales y desatendidas. Permite a los pacientes consultar con médicos mediante videoconferencia, mejorando el acceso a la atención y reduciendo la necesidad de viajar. Otro avance significativo en la atención médica es la medicina de precisión, que adapta los tratamientos a los perfiles genéticos individuales. Este enfoque ha llevado a terapias más efectivas para una variedad de condiciones, incluyendo ciertos cánceres y enfermedades crónicas.",
             "output": {
                 "topics": [
-                    "Telemedicine and its impact on healthcare accessibility",
-                    "Precision medicine and its role in tailoring treatments to genetic profiles",
+                    "La telemedicina y su impacto en la accesibilidad a la atención médica",
+                    "Medicina de precisión y su papel en la personalización de tratamientos según perfiles genéticos",
                 ]
             },
         },
@@ -258,57 +264,57 @@ main_topic_extraction_prompt = Prompt(
 
 find_relevant_context_prompt = Prompt(
     name="find_relevant_context",
-    instruction="Given a question and set of contexts, find the most relevant contexts to answer the question.",
+    instruction="Dada una pregunta y un conjunto de contextos, encuentra los contextos más relevantes para responder la pregunta.",
     examples=[
         {
-            "question": "What is the capital of France?",
+            "question": "¿Cuál es la capital de Francia?",
             "contexts": [
-                "1. France is a country in Western Europe. It has several cities, including Paris, Lyon, and Marseille. Paris is not only known for its cultural landmarks like the Eiffel Tower and the Louvre Museum but also as the administrative center.",
-                "2. The capital of France is Paris. It is also the most populous city in France, with a population of over 2 million people. Paris is known for its cultural landmarks like the Eiffel Tower and the Louvre Museum.",
-                "3. Paris is the capital of France. It is also the most populous city in France, with a population of over 2 million people. Paris is known for its cultural landmarks like the Eiffel Tower and the Louvre Museum.",
+                "1. Francia es un país en Europa Occidental. Tiene varias ciudades, incluyendo París, Lyon y Marsella. París no solo es conocido por sus puntos de referencia culturales como la Torre Eiffel y el Museo del Louvre, sino también como el centro administrativo.",
+                "2. La capital de Francia es París. También es la ciudad más poblada de Francia, con una población de más de 2 millones de personas. París es conocido por sus puntos de referencia culturales como la Torre Eiffel y el Museo del Louvre.",
+                "3. París es la capital de Francia. También es la ciudad más poblada de Francia, con una población de más de 2 millones de personas. París es conocido por sus puntos de referencia culturales como la Torre Eiffel y el Museo del Louvre.",
             ],
             "output": {
                 "relevant_contexts": [1, 2],
             },
         },
         {
-            "question": "How does caffeine affect the body and what are its common sources?",
+            "question": "¿Cómo afecta la cafeína al cuerpo y cuáles son sus fuentes comunes?",
             "contexts": [
-                "1. Caffeine is a central nervous system stimulant. It can temporarily ward off drowsiness and restore alertness. It primarily affects the brain, where it alters the function of neurotransmitters.",
-                "2. Regular physical activity is essential for maintaining good health. It can help control weight, combat health conditions, boost energy, and promote better sleep.",
-                "3. Common sources of caffeine include coffee, tea, cola, and energy drinks. These beverages are consumed worldwide and are known for providing a quick boost of energy.",
+                "1. La cafeína es un estimulante del sistema nervioso central. Puede evitar temporalmente la somnolencia y restaurar la alerta. Afecta principalmente al cerebro, donde altera la función de los neurotransmisores.",
+                "2. La actividad física regular es esencial para mantener una buena salud. Puede ayudar a controlar el peso, combatir condiciones de salud, aumentar la energía y promover un mejor sueño.",
+                "3. Las fuentes comunes de cafeína incluyen café, té, cola y bebidas energéticas. Estas bebidas se consumen en todo el mundo y son conocidas por proporcionar un rápido impulso de energía.",
             ],
-            "output": {"relevant_contexts": [1, 2]},
+            "output": {"relevant_contexts": [1, 3]},
         },
     ],
     input_keys=["question", "contexts"],
     output_key="output",
     output_type="json",
-    language="english",
+    language="spanish",
 )
 
 
 question_rewrite_prompt = Prompt(
     name="rewrite_question",
-    instruction="""Given a context, question and feedback, rewrite the question to improve its clarity and answerability based on the feedback provided.""",
+    instruction="""Dado un contexto, una pregunta y una retroalimentación, reescribe la pregunta para mejorar su claridad y capacidad de respuesta basándote en la retroalimentación proporcionada.""",
     examples=[
         {
-            "context": "The Eiffel Tower was constructed using iron and was originally intended as a temporary exhibit for the 1889 World's Fair held in Paris. Despite its initial temporary purpose, the Eiffel Tower quickly became a symbol of Parisian ingenuity and an iconic landmark of the city, attracting millions of visitors each year. The tower's design, created by Gustave Eiffel, was initially met with criticism from some French artists and intellectuals, but it has since been celebrated as a masterpiece of structural engineering and architectural design.",
-            "question": "Who created the design for the Tower?",
-            "feedback": "The question asks about the creator of the design for 'the Tower', but it does not specify which tower it refers to. There are many towers worldwide, and without specifying the exact tower, the question is unclear and unanswerable. To improve the question, it should include the name or a clear description of the specific tower in question.",
-            "output": "Who created the design for the Eiffel Tower?",
+            "context": "La Torre Eiffel fue construida usando hierro y originalmente fue destinada como una exhibición temporal para la Exposición Universal de 1889 celebrada en París. A pesar de su propósito temporal inicial, la Torre Eiffel rápidamente se convirtió en un símbolo de la ingeniosidad parisina y un icónico punto de referencia de la ciudad, atrayendo millones de visitantes cada año. El diseño de la torre, creado por Gustave Eiffel, inicialmente recibió críticas de algunos artistas e intelectuales franceses, pero desde entonces ha sido celebrada como una obra maestra de la ingeniería estructural y el diseño arquitectónico.",
+            "question": "¿Quién creó el diseño para la Torre?",
+            "feedback": "La pregunta es sobre el creador del diseño de 'la Torre', pero no especifica a cuál torre se refiere. Hay muchas torres en todo el mundo y, sin especificar la torre exacta, la pregunta es poco clara e irresoluble. Para mejorar la pregunta, debería incluir el nombre o una descripción clara de la torre específica en cuestión.",
+            "output": "¿Quién creó el diseño para la Torre Eiffel?",
         },
         {
-            "context": "'Exploring Zero-Shot Learning in Neural Networks' was published by Smith and Lee in 2021, focusing on the application of zero-shot learning techniques in artificial intelligence.",
-            "question": "What datasets were used for the zero-shot evaluations in this study?",
-            "feedback": "The question asks about the datasets used for zero-shot evaluations in 'this study', without specifying or providing any details about the study in question. This makes the question unclear for those who do not have access to or knowledge of the specific study. To improve clarity and answerability, the question should specify the study it refers to, or provide enough context about the study for the question to be understood and answered independently.",
-            "output": "What datasets were used for the zero-shot evaluations Exploring Zero-Shot Learning in Neural Networks paper?",
+            "context": "'Explorando el Aprendizaje Cero-Shot en Redes Neuronales' fue publicado por Smith y Lee en 2021, enfocándose en la aplicación de técnicas de aprendizaje cero-shot en inteligencia artificial.",
+            "question": "Qué conjuntos de datos se utilizaron para las evaluaciones de cero-disparos en este estudio?",
+            "feedback": "La pregunta es sobre los conjuntos de datos utilizados para evaluaciones de cero disparos en 'este estudio', sin especificar ni proporcionar detalles sobre el estudio en cuestión. Esto hace que la pregunta sea poco clara para aquellos que no tienen acceso o conocimiento del estudio específico. Para mejorar la claridad y la capacidad de respuesta, la pregunta debería especificar el estudio al que se refiere, o proporcionar suficiente contexto sobre el estudio para que la pregunta sea entendida y respondida de manera independiente.",
+            "output": "¿Qué conjuntos de datos se utilizaron para las evaluaciones de cero disparos en el artículo Explorando el Aprendizaje de Cero Disparos en Redes Neuronales?",
         },
     ],
     input_keys=["context", "question", "feedback"],
     output_key="output",
     output_type="str",
-    language="english",
+    language="spanish",
 )
 
 ### Filters
@@ -338,30 +344,30 @@ evolution_elimination_parser = RagasoutputParser(pydantic_object=EvolutionElimin
 context_scoring_prompt = Prompt(
     name="score_context",
     instruction="""
-    Given a context, perform the following task and output the answer in VALID JSON format: Assess the provided context and assign a numerical score of 1 (Low), 2 (Medium), or 3 (High) for each of the following criteria in your JSON response:
+Dado un contexto, realiza la siguiente tarea y da la respuesta en formato JSON VÁLIDO: Evalúa el contexto proporcionado y asigna una puntuación numérica de 1 (Bajo), 2 (Medio) o 3 (Alto) para cada uno de los siguientes criterios en tu respuesta JSON:
 
-clarity: Evaluate the precision and understandability of the information presented. High scores (3) are reserved for contexts that are both precise in their information and easy to understand. Low scores (1) are for contexts where the information is vague or hard to comprehend.
-depth: Determine the level of detailed examination and the inclusion of innovative insights within the context. A high score indicates a comprehensive and insightful analysis, while a low score suggests a superficial treatment of the topic.
-structure: Assess how well the content is organized and whether it flows logically. High scores are awarded to contexts that demonstrate coherent organization and logical progression, whereas low scores indicate a lack of structure or clarity in progression.
-relevance: Judge the pertinence of the content to the main topic, awarding high scores to contexts tightly focused on the subject without unnecessary digressions, and low scores to those that are cluttered with irrelevant information.
-Structure your JSON output to reflect these criteria as keys with their corresponding scores as values
-    """,
+claridad: Evalúa la precisión y comprensibilidad de la información presentada. Las puntuaciones altas (3) están reservadas para contextos que son precisos en su información y fáciles de entender. Las puntuaciones bajas (1) son para contextos donde la información es vaga o difícil de comprender.
+profundidad: Determina el nivel de examen detallado y la inclusión de ideas innovadoras dentro del contexto. Una puntuación alta indica un análisis exhaustivo y perspicaz, mientras que una puntuación baja sugiere un tratamiento superficial del tema.
+estructura: Evalúa qué tan bien está organizado el contenido y si fluye lógicamente. Las puntuaciones altas se otorgan a contextos que demuestran una organización coherente y una progresión lógica, mientras que las puntuaciones bajas indican una falta de estructura o claridad en la progresión.
+relevancia: Juzga la pertinencia del contenido al tema principal, otorgando puntuaciones altas a contextos enfocados estrictamente en el tema sin digresiones innecesarias, y puntuaciones bajas a aquellos que están desordenados con información irrelevante.
+Estructura tu salida JSON para reflejar estos criterios como claves con sus puntuaciones correspondientes como valores.
+""",
     output_format_instruction=get_json_format_instructions(ContextScoring),
     examples=[
         {
-            "context": "The Pythagorean theorem is a fundamental principle in geometry. It states that in a right-angled triangle, the square of the length of the hypotenuse (the side opposite the right angle) is equal to the sum of the squares of the lengths of the other two sides. This can be written as a^2 + b^2 = c^2 where c represents the length of the hypotenuse, and a and b represent the lengths of the other two sides.",
+            "context": "El teorema de Pitágoras es un principio fundamental en geometría. Afirma que en un triángulo rectángulo, el cuadrado de la longitud de la hipotenusa (el lado opuesto al ángulo recto) es igual a la suma de los cuadrados de las longitudes de los otros dos lados. Esto se puede escribir como a^2 + b^2 = c^2 donde c representa la longitud de la hipotenusa, y a y b representan las longitudes de los otros dos lados.",
             "output": ContextScoring.parse_obj(
                 {"clarity": 3, "depth": 1, "structure": 3, "relevance": 3}
             ).dict(),
         },
         {
-            "context": "Albert Einstein (14 March 1879 - 18 April 1955) was a German-born theoretical physicist who is widely held to be one of the greatest and most influential scientists of all time.",
+            "context": "Albert Einstein (14 de marzo de 1879 - 18 de abril de 1955) fue un físico teórico nacido en Alemania que es ampliamente considerado como uno de los científicos más grandes e influyentes de todos los tiempos.",
             "output": ContextScoring.parse_obj(
                 {"clarity": 3, "depth": 2, "structure": 3, "relevance": 3}
             ).dict(),
         },
         {
-            "context": "I love chocolate. It's really tasty. Oh, and by the way, the earth orbits the sun, not the other way around. Also, my favorite color is blue.",
+            "context": "Me encanta el chocolate. Es realmente sabroso. Ah, y por cierto, la Tierra orbita alrededor del Sol, no al revés. Además, mi color favorito es el azul.",
             "output": ContextScoring.parse_obj(
                 {"clarity": 2, "depth": 1, "structure": 1, "relevance": 1}
             ).dict(),
@@ -370,62 +376,62 @@ Structure your JSON output to reflect these criteria as keys with their correspo
     input_keys=["context"],
     output_key="output",
     output_type="json",
-    language="english",
+    language="spanish",
 )
 
 
 filter_question_prompt = Prompt(
     name="filter_question",
     instruction="""
-Asses the given question for clarity and answerability given enough domain knowledge, consider the following criteria:
-1.Independence: Can the question be understood and answered without needing additional context or access to external references not provided within the question itself? Questions should be self-contained, meaning they do not rely on specific documents, tables, or prior knowledge not shared within the question.
-2.Clear Intent: Is it clear what type of answer or information the question seeks? The question should convey its purpose without ambiguity, allowing for a direct and relevant response.
-Based on these criteria, assign a verdict of "1" if a question is specific, independent, and has a clear intent, making it understandable and answerable based on the details provided. Assign "0" if it fails to meet one or more of these criteria due to vagueness, reliance on external references, or ambiguity in intent.
-Provide feedback and a verdict in JSON format, including suggestions for improvement if the question is deemed unclear. Highlight aspects of the question that contribute to its clarity or lack thereof, and offer advice on how it could be reframed or detailed for better understanding and answerability.
+Evalúa la pregunta dada por su claridad y capacidad de respuesta dada suficiente conocimiento del dominio, considerando los siguientes criterios:
+1.Independencia: ¿Puede entenderse y responderse la pregunta sin necesidad de contexto adicional o acceso a referencias externas no proporcionadas dentro de la pregunta misma? Las preguntas deben ser autónomas, lo que significa que no dependen de documentos específicos, tablas o conocimientos previos no compartidos dentro de la pregunta.
+2.Intención clara: ¿Es claro qué tipo de respuesta o información busca la pregunta? La pregunta debe transmitir su propósito sin ambigüedad, permitiendo una respuesta directa y relevante.
+Basado en estos criterios, asigna un veredicto de "1" si una pregunta es específica, independiente y tiene una intención clara, lo que la hace comprensible y respondible basada en los detalles proporcionados. Asigna "0" si no cumple uno o más de estos criterios debido a vaguedad, dependencia de referencias externas o ambigüedad en la intención.
+Proporciona comentarios y un veredicto en formato JSON, incluyendo sugerencias de mejora si la pregunta se considera poco clara. Destaca los aspectos de la pregunta que contribuyen a su claridad o falta de la misma, y ofrece consejos sobre cómo podría reformularse o detallarse para mejorar la comprensión y la capacidad de respuesta.
 """,
     output_format_instruction=get_json_format_instructions(QuestionFilter),
     examples=[
         {
-            "question": "What is the discovery about space?",
+            "question": "¿Cuál es el descubrimiento sobre el espacio?",
             "output": QuestionFilter.parse_obj(
                 {
-                    "feedback": "The question is too vague and broad, asking for a 'discovery about space' without specifying any particular aspect, time frame, or context of interest. This could refer to a wide range of topics, from the discovery of new celestial bodies to advancements in space travel technology. To improve clarity and answerability, the question could specify the type of discovery (e.g., astronomical, technological), the time frame (e.g., recent, historical), or the context (e.g., within a specific research study or space mission).",
+                    "feedback": "La pregunta es demasiado vaga y amplia, pidiendo un 'descubrimiento sobre el espacio' sin especificar ningún aspecto particular, marco temporal o contexto de interés. Esto podría referirse a una amplia gama de temas, desde el descubrimiento de nuevos cuerpos celestes hasta avances en la tecnología de viajes espaciales. Para mejorar la claridad y la capacidad de respuesta, la pregunta podría especificar el tipo de descubrimiento (por ejemplo, astronómico, tecnológico), el marco temporal (por ejemplo, reciente, histórico) o el contexto (por ejemplo, dentro de un estudio de investigación específico o una misión espacial).",
                     "verdict": "0",
                 }
             ).dict(),
         },
         {
-            "question": "How does ALMA-13B-R perform compared to other translation models in the WMT'23 study, based on the results in context1 and context2?",
+            "question": "¿Cómo se desempeña ALMA-13B-R en comparación con otros modelos de traducción en el estudio WMT'23, basado en los resultados en el contexto1 y contexto2?",
             "output": QuestionFilter.parse_obj(
                 {
-                    "feedback": "This question asks for a comparison of the ALMA-13B-R model's performance against other translation models within the WMT'23 study, specifically referring to results in 'context1' and 'context2'. While it clearly specifies the model of interest (ALMA-13B-R) and the study (WMT'23), it assumes access to and understanding of 'context1' and 'context2' without explaining what these contexts entail. This makes the question unclear for those not familiar with the WMT'23 study or these specific contexts. To improve clarity and answerability for a broader audience, the question could benefit from defining or describing 'context1' and 'context2' or explaining the criteria used for comparison in these contexts.",
+                    "feedback": "Esta pregunta pide una comparación del rendimiento del modelo ALMA-13B-R frente a otros modelos de traducción dentro del estudio WMT'23, refiriéndose específicamente a los resultados en 'contexto1' y 'contexto2'. Aunque especifica claramente el modelo de interés (ALMA-13B-R) y el estudio (WMT'23), asume acceso y comprensión de 'contexto1' y 'contexto2' sin explicar qué implican estos contextos. Esto hace que la pregunta sea poco clara para aquellos que no están familiarizados con el estudio WMT'23 o estos contextos específicos. Para mejorar la claridad y la capacidad de respuesta para un público más amplio, la pregunta podría beneficiarse de definir o describir 'contexto1' y 'contexto2' o explicar los criterios utilizados para la comparación en estos contextos.",
                     "verdict": "0",
                 }
             ).dict(),
         },
         {
-            "question": "How do KIWI-XXL and XCOMET compare to the gold standard references in Table 1 in terms of evaluation scores, translation model performance, and success rate in surpassing the references?",
+            "question": "¿Cómo se comparan KIWI-XXL y XCOMET con las referencias estándar de oro en la Tabla 1 en términos de puntuaciones de evaluación, rendimiento del modelo de traducción y tasa de éxito en superar las referencias?",
             "output": QuestionFilter.parse_obj(
                 {
-                    "feedback": "The question requests a comparison between KIWI-XXL and XCOMET models and gold standard references in 'Table 1', focusing on evaluation scores, translation model performance, and success rates in surpassing the references. It specifies the models and criteria for comparison, making the intent clear. However, the question assumes access to 'Table 1' without providing its content or context, making it unclear for those without direct access to the source material. To be clearer and more answerable for a general audience, the question could include a brief description of the content or key findings of 'Table 1', or alternatively, frame the question in a way that does not rely on specific, unpublished documents.",
+                    "feedback": "La pregunta solicita una comparación entre los modelos KIWI-XXL y XCOMET y las referencias estándar de oro en 'Tabla 1', centrándose en las puntuaciones de evaluación, el rendimiento del modelo de traducción y las tasas de éxito en superar las referencias. Especifica los modelos y los criterios para la comparación, haciendo clara la intención. Sin embargo, la pregunta asume acceso a 'Tabla 1' sin proporcionar su contenido o contexto, lo que la hace poco clara para aquellos sin acceso directo al material fuente. Para ser más clara y responderse para un público general, la pregunta podría incluir una breve descripción del contenido o hallazgos clave de 'Tabla 1', o alternativamente, enmarcar la pregunta de manera que no dependa de documentos específicos no publicados.",
                     "verdict": 0,
                 }
             ).dict(),
         },
         {
-            "question": "What is the configuration of UL2 training objective in OpenMoE and why is it a better choice for pre-training?",
+            "question": "¿Cuál es la configuración del objetivo de entrenamiento UL2 en OpenMoE y por qué es una mejor opción para el pre-entrenamiento?",
             "output": QuestionFilter.parse_obj(
                 {
-                    "feedback": "The question asks for the configuration of the UL2 training objective within the OpenMoE framework and the rationale behind its suitability for pre-training. It is clear in specifying the topic of interest (UL2 training objective, OpenMoE) and seeks detailed information on both the configuration and the reasons for its effectiveness in pre-training. However, the question might be challenging for those unfamiliar with the specific terminology or the context of OpenMoE and UL2. For broader clarity and answerability, it would be helpful if the question included a brief explanation or context about OpenMoE and the UL2 training objective, or clarified the aspects of pre-training effectiveness it refers to (e.g., efficiency, accuracy, generalization).",
+                    "feedback": "La pregunta pide información detallada sobre la configuración del objetivo de entrenamiento UL2 dentro del marco OpenMoE y la razón detrás de su idoneidad para el pre-entrenamiento. Es clara al especificar el tema de interés (objetivo de entrenamiento UL2, OpenMoE) y busca información detallada tanto sobre la configuración como sobre las razones de su eficacia en el preentrenamiento. Sin embargo, la pregunta podría ser un desafío para aquellos que no están familiarizados con la terminología específica o el contexto de OpenMoE y UL2. Para una mayor claridad y capacidad de respuesta, sería útil si la pregunta incluyera una breve explicación o contexto sobre OpenMoE y el objetivo de entrenamiento UL2, o aclarara los aspectos de la eficacia del pre-entrenamiento a los que se refiere (por ejemplo, eficiencia, precisión, generalización).",
                     "verdict": 1,
                 }
             ).dict(),
         },
         {
-            "question": "What is the detailed configuration of the UL2 training objective in OpenMoE, based on the provided context?",
+            "question": "¿Cuál es la configuración detallada del objetivo de entrenamiento UL2 en OpenMoE, basado en el contexto proporcionado?",
             "output": QuestionFilter.parse_obj(
                 {
-                    "feedback": "The question seeks detailed information on the UL2 training objective's configuration within the OpenMoE framework, mentioning 'the provided context' without actually including or describing this context within the query. This makes the question unclear for those who do not have access to the unspecified context. For the question to be clear and answerable, it needs to either include the relevant context directly within the question or be framed in a way that does not require external information. Detailing the specific aspects of the configuration of interest (e.g., loss functions, data augmentation techniques) could also help clarify the query.",
+                    "feedback": "La pregunta busca información detallada sobre la configuración del objetivo de entrenamiento UL2 dentro del marco OpenMoE, mencionando 'el contexto proporcionado' sin incluir o describir realmente este contexto dentro de la consulta. Esto hace que la pregunta sea poco clara para aquellos que no tienen acceso al contexto no especificado. Para que la pregunta sea clara y respondible, necesita incluir el contexto relevante directamente dentro de la pregunta o enmarcarse de una manera que no requiera información externa. Detallar los aspectos específicos de la configuración de interés (por ejemplo, funciones de pérdida, técnicas de aumento de datos) también podría ayudar a aclarar la consulta.",
                     "verdict": 0,
                 }
             ).dict(),
@@ -434,43 +440,43 @@ Provide feedback and a verdict in JSON format, including suggestions for improve
     input_keys=["question"],
     output_key="output",
     output_type="json",
-    language="english",
+    language="spanish",
 )
 
 evolution_elimination_prompt = Prompt(
     name="evolution_elimination",
-    instruction="""Check if the given two questions are equal based on following requirements:
-    1. They have same constraints and requirements.
-    2. They have same depth and breadth of the inquiry.
-    Output verdict as 1 if they are equal and 0 if they are not""",
+    instruction="""Verifica si las dos preguntas dadas son iguales basándote en los siguientes requisitos:
+1. Tienen las mismas restricciones y requisitos.
+2. Tienen la misma profundidad y amplitud de la consulta.
+Da un veredicto de 1 si son iguales y 0 si no lo son.""",
     output_format_instruction=get_json_format_instructions(EvolutionElimination),
     examples=[
         {
-            "question1": "What are the primary causes of climate change?",
-            "question2": "What factors contribute to global warming?",
+            "question1": "¿Cuáles son las principales causas del cambio climático?",
+            "question2": "¿Qué factores contribuyen al calentamiento global?",
             "output": EvolutionElimination.parse_obj(
                 {
-                    "reason": "While both questions deal with environmental issues, 'climate change' encompasses broader changes than 'global warming', leading to different depths of inquiry.",
+                    "reason": "Aunque ambas preguntas tratan sobre problemas ambientales, el 'cambio climático' abarca cambios más amplios que el 'calentamiento global', lo que lleva a diferentes profundidades de indagación.",
                     "verdict": 0,
                 }
             ).dict(),
         },
         {
-            "question1": "How does photosynthesis work in plants?",
-            "question2": "Can you explain the process of photosynthesis in plants?",
+            "question1": "¿Cómo funciona la fotosíntesis en las plantas?",
+            "question2": "¿Puedes explicar el proceso de fotosíntesis en las plantas?",
             "output": EvolutionElimination.parse_obj(
                 {
-                    "reason": "Both questions ask for an explanation of the photosynthesis process in plants, sharing the same depth, breadth, and requirements for the answer.",
+                    "reason": "Ambas preguntas solicitan una explicación del proceso de fotosíntesis en las plantas, compartiendo la misma profundidad, amplitud y requisitos para la respuesta",
                     "verdict": 1,
                 }
             ).dict(),
         },
         {
-            "question1": "What are the health benefits of regular exercise?",
-            "question2": "Can you list the advantages of exercising regularly for health?",
+            "question1": "¿Cuáles son los beneficios para la salud del ejercicio regular?",
+            "question2": "¿Puedes enumerar las ventajas de hacer ejercicio regularmente para la salud?",
             "output": EvolutionElimination.parse_obj(
                 {
-                    "reason": "Both questions seek information about the positive effects of regular exercise on health. They require a similar level of detail in listing the health benefits.",
+                    "reason": "Ambas preguntas buscan información sobre los efectos positivos del ejercicio regular en la salud. Requieren un nivel similar de detalle al enumerar los beneficios para la salud.",
                     "verdict": 1,
                 }
             ).dict(),
@@ -479,5 +485,5 @@ evolution_elimination_prompt = Prompt(
     input_keys=["question1", "question2"],
     output_key="output",
     output_type="json",
-    language="english",
+    language="spanish",
 )
